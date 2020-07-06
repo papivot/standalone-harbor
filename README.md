@@ -14,7 +14,7 @@ sudo sed -ri '/\sswap\s/s/^#?/#/' /etc/fstab
 sudo ufw disable
 ```
 
-## Installing Latest Stable Docker Release and setting up docker daemon (if not already installed)
+## Installing Latest Stable Docker Release and setting up docker daemon (if not already installed) example on Ubuntu. 
 ```
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -44,7 +44,7 @@ sudo systemctl restart docker
 ```
 curl -s https://github.com/docker/compose/releases/latest/download
 ```
-grep the Latest version and download the install - 1.25.5 in this example. 
+grep the Latest version and download the install - 1.26.2 in this example. 
 ```
 sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
@@ -55,11 +55,11 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 ```
 curl -s https://github.com/goharbor/harbor/releases/latest/download
 ```
-Grep the latest version of Harbor and download it. 1.10.2 in this example
+Grep the latest version of Harbor and download it. 2.0.1 in this example
 
 ```
 curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep browser_download_url | grep online | cut -d '"' -f 4 | wget -qi -
-tar xvf harbor-online-installer-v1.10.2.tgz
+tar xvf harbor-online-installer-v2.0.1.tgz
 cd harbor
 sed -i "s/reg.mydomain.com/$IPorFQDN/g" harbor.yml
 ```
@@ -86,7 +86,7 @@ https:
   # https port for harbor, default is 443
   port: 443
   # The path of cert and key files for nginx
-  certificate: /home/nverma/harbor/publickey.pem
+  certificate: /home/nverma/harbor/fullchain.pem
   private_key: /home/nverma/harbor/privkey.pem
 
 # Uncomment external_url if you want to enable external proxy
