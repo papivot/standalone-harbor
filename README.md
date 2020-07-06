@@ -101,5 +101,5 @@ harbor_admin_password: Passw0rd!
 ```
 ## Install with Clair/Notery and ChartMuseum 
 ```
-sudo ./install.sh --with-clair --with-chartmuseum --with-notery
+sudo ./install.sh --with-clair --with-trivy --with-chartmuseum --with-notery
 ```
