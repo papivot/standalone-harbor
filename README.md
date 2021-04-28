@@ -75,3 +75,13 @@ metric:
 ```
 sudo ./install.sh --with-trivy --with-chartmuseum --with-notary
 ```
+
+## To stop,start and destroy Harbor 
+```
+cd ${directory containing the docker-compose.yml}
+sudo docker-compose stop
+sudo docker-compose start
+# to complete destroy 
+sudo docker-compose down -v  --remove-orphans
+```
+  
