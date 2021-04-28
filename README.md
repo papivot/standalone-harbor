@@ -44,17 +44,13 @@ sudo systemctl restart docker
 ## Install Latest Stable Harbor Release v 2.2.1 in this example
 ```
 wget https://github.com/goharbor/harbor/releases/download/v2.2.1/harbor-offline-installer-v2.2.1.tgz
-```
-Grep the latest version of Harbor and download it. 2.0.1 in this example
-
-```
 tar xzvf harbor-offline-installer-v2.2.1.tgz
 cd harbor
 cp [your cert file] ./cert.pem 
 cp [your key file] ./key/pem
 ```
 
-## Modify the install file. - Sample changes - 
+## Modify the `install.yml` file. - Sample changes - 
 ```
 ---
 hostname: harbor.navneetv.com
