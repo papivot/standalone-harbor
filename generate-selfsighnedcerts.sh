@@ -1,6 +1,7 @@
 #!/bin/bash
 
 fqdn=apps.navneetv.com
+ipaddress=10.100.1.1
 #fqdn=apps.navlab.io
 
 # Generate a CA Cert Private Key"
@@ -26,6 +27,7 @@ subjectAltName = @alt_names
 [alt_names]
 DNS.1=${fqdn}
 DNS.2=*.${fqdn}
+IP.1=${ipaddress}
 EOF
 
 # Use the x509 v3 extension file to gerneate a cert for the Harbor host"
