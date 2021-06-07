@@ -21,23 +21,11 @@ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add 
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo apt-get update -y
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose
-sudo tee /etc/docker/daemon.json >/dev/null <<EOF
-{
-  "exec-opts": ["native.cgroupdriver=systemd"],
-  "insecure-registries" : ["$IPorFQDN:443","$IPorFQDN:80","0.0.0.0/0"],
-  "log-driver": "json-file",
-  "log-opts": {
-    "max-size": "100m"
-  },
-  "storage-driver": "overlay2"
-  "dns":["dns_server"]
-}
-EOF
-sudo mkdir -p /etc/systemd/system/docker.service.d
 sudo groupadd docker
 MAINUSER=$(logname)
 sudo usermod -aG docker $MAINUSER
 sudo systemctl daemon-reload
+sudo systemctl enable docker
 sudo systemctl restart docker
 ```
 
@@ -70,6 +58,38 @@ metric:
 ## Install with Clair/Notery and ChartMuseum 
 ```
 sudo ./install.sh --with-trivy --with-chartmuseum --with-notary
+```
+## Hacks for air-gapped environment 
+
+On a server with internet connections, download the trivy DB file and all the docker images that need to be dwonloaded
+```
+wget https://github.com/aquasecurity/trivy-db/releases/latest/download/trivy-offline.db.tgz
+
+docker login -u user_name your_public_registry_id
+docker pull hello-world
+docker save hello-world:latest > hello-world.latest.tar
+=====
+### Now copy these files to the Harbor server
+```
+
+On the server running Harbor 
+```
+#### To upload container images downloaded earlier
+#
+docker login -u admin harbor.env1.lab.local
+docker load --input hello-world.latest.tar
+docker tag hello-world:latest harbor.env1.lab.local/library/hello-world:latest
+docker push harbor.env1.lab.local/library/hello-world
+
+#### To install /setup the Trivy DB
+#
+sudo mv ~/workspace/nested-harbor/trivy-offline.db.tgz /data/trivy-adapter/trivy/db
+sudo tar xvf trivy-offline.db.tgz
+sudo rm trivy-offline.db.tgz
+sudo chown 10000:10000 -R /data/trivy-adapter/trivy/db
+sudo chmod 700 /data/trivy-adapter/trivy/db
+sudo chmod 644 /data/trivy-adapter/trivy/db/trivy.db
+sudo chmod 644 /data/trivy-adapter/trivy/db/metadata.json
 ```
 
 ## To stop,start and destroy Harbor 
