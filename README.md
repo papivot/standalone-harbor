@@ -83,7 +83,7 @@ docker push harbor.env1.lab.local/library/hello-world
 
 #### To install /setup the Trivy DB
 #
-sudo mv ~/workspace/nested-harbor/trivy-offline.db.tgz /data/trivy-adapter/trivy/db
+sudo mv trivy-offline.db.tgz /data/trivy-adapter/trivy/db
 sudo tar xvf trivy-offline.db.tgz
 sudo rm trivy-offline.db.tgz
 sudo chown 10000:10000 -R /data/trivy-adapter/trivy/db
