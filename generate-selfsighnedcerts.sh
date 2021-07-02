@@ -9,14 +9,14 @@ cakeyfile=$(hostname)-ca.key
 cacrtfile=$(hostname)-ca.crt
 
 if [ ! -f "${cakeyfile}" ] || [ ! -f "${cacrtfile}" ]; then
-  echo "CA cert ${cacrtfile} and key ${cakeyfile} do not exist."
+  	echo "CA cert ${cacrtfile} and key ${cakeyfile} do not exist."
 	echo "Generating them before generating the server certificate..."
 
 	# Generate a CA Cert Private Key"
-	sudo openssl genrsa -out ${cakeyfile} 4096
+	openssl genrsa -out ${cakeyfile} 4096
 
 	# Generate a CA Cert Certificate"
-	sudo openssl req -x509 -new -nodes -sha512 -days 3650 -subj "/C=US/ST=VA/L=Ashburn/O=SE/OU=Personal/CN=${fqdn}" -key ${cakeyfile} -out ${cacrtfile}
+	openssl req -x509 -new -nodes -sha512 -days 3650 -subj "/C=US/ST=VA/L=Ashburn/O=SE/OU=Personal/CN=$(hostname)" -key ${cakeyfile} -out ${cacrtfile}
 
 	sudo cp -p ${cacrtfile} /usr/local/share/ca-certificates/${cacrtfile}
 	echo
@@ -27,10 +27,10 @@ if [ ! -f "${cakeyfile}" ] || [ ! -f "${cacrtfile}" ]; then
 fi
 
 # Generate a Server Certificate Private Key"
-sudo openssl genrsa -out ${fqdn}.key 4096
+openssl genrsa -out ${fqdn}.key 4096
 
 # Generate a Server Certificate Signing Request"
-sudo openssl req -sha512 -new -subj "/C=US/ST=VA/L=Ashburn/O=SE/OU=Personal/CN=${fqdn}" -key ${fqdn}.key -out ${fqdn}.csr
+openssl req -sha512 -new -subj "/C=US/ST=VA/L=Ashburn/O=SE/OU=Personal/CN=${fqdn}" -key ${fqdn}.key -out ${fqdn}.csr
 
 # Generate a x509 v3 extension file"
 cat > v3.ext <<-EOF
@@ -47,4 +47,4 @@ IP.1=${ipaddress}
 EOF
 
 # Use the x509 v3 extension file to gerneate a cert for the Harbor host"
-sudo openssl x509 -req -sha512 -days 3650 -extfile v3.ext -CA ${cacrtfile} -CAkey ${cakeyfile} -CAcreateserial -in ${fqdn}.csr -out ${fqdn}.cert
+openssl x509 -req -sha512 -days 365 -extfile v3.ext -CA ${cacrtfile} -CAkey ${cakeyfile} -CAcreateserial -in ${fqdn}.csr -out ${fqdn}.cert
