@@ -85,6 +85,7 @@ docker push harbor.env1.lab.local/library/hello-world
 
 #### To install /setup the Trivy DB
 #
+wget https://github.com/aquasecurity/trivy-db/releases/latest/download/trivy-offline.db.tgz
 sudo mv trivy-offline.db.tgz /data/trivy-adapter/trivy/db
 sudo tar xvf trivy-offline.db.tgz
 sudo rm trivy-offline.db.tgz
