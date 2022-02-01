@@ -21,7 +21,7 @@ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add 
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo apt-get update -y
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose\n
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose\n
 sudo chmod +x /usr/local/bin/docker-compose
 sudo groupadd docker
 MAINUSER=$(logname)
@@ -33,8 +33,8 @@ sudo systemctl restart docker
 
 ## Install Latest Stable Harbor Release v 2.2.1 in this example
 ```console
-wget https://github.com/goharbor/harbor/releases/download/v2.2.1/harbor-offline-installer-v2.2.1.tgz
-tar xzvf harbor-offline-installer-v2.2.1.tgz
+wget https://github.com/goharbor/harbor/releases/download/v2.4.1/harbor-offline-installer-v2.4.1.tgz
+tar xzvf harbor-offline-installer-v2.4.1.tgz
 cd harbor
 cp [your cert file] ./cert.pem 
 cp [your key file] ./key/pem
