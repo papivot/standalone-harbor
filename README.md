@@ -107,7 +107,9 @@ sudo docker-compose down -v  --remove-orphans
 
 ---
 ---
-## Install Harbor on a Service Installer VM 
+## Install Harbor on a Tanzu Service Installer VM 
+
+Login to the VM as `root` and execte the following commands - 
 ```
 curl -L "https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose\n
 chmod +x /usr/local/bin/docker-compose
@@ -117,8 +119,23 @@ cd harbor
 cp harbor.yml.tmpl harbor.yml
 ```
 
-`vi harbor.yml` and modify the config as needed.
+`vi harbor.yml` and modify the config as needed. Need to chnage the http port to 8080 or so as port 80 is already consumed by another program on the VM. 
+
+```yaml
+# http related config
+http:
+  port: 8080
+
+# https related config
+https:
+  port: 443
+  certificate: /root/harbor/arcas.env1.lab.test.cert
+  private_key: /root/harbor/arcas.env1.lab.test.key
+  ...
+```
 
 ```
-/install.sh --with-trivy --with-chartmuseum
+./install.sh --with-trivy --with-chartmuseum
 ```
+
+Enjoy !!!
