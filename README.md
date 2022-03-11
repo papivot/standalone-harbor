@@ -36,11 +36,12 @@ sudo systemctl restart docker
 wget https://github.com/goharbor/harbor/releases/download/v2.4.1/harbor-offline-installer-v2.4.1.tgz
 tar xzvf harbor-offline-installer-v2.4.1.tgz
 cd harbor
+cp harbor.yml.tmpl harbor.yml
 cp [your cert file] ./cert.pem 
 cp [your key file] ./key/pem
 ```
 
-## Modify the `install.yml` file. - Sample changes - 
+## Modify the `harbor.yml` file. - Sample changes - 
 ```yaml
 ---
 hostname: harbor.navneetv.com
@@ -103,4 +104,21 @@ sudo docker-compose start
 # to complete destroy 
 sudo docker-compose down -v  --remove-orphans
 ```
-  
+
+---
+---
+## Install Harbor on a Service Installer VM 
+```
+curl -L "https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose\n
+chmod +x /usr/local/bin/docker-compose
+wget https://github.com/goharbor/harbor/releases/download/v2.4.1/harbor-offline-installer-v2.4.1.tgz
+tar xzvf harbor-offline-installer-v2.4.1.tgz
+cd harbor
+cp harbor.yml.tmpl harbor.yml
+```
+
+`vi harbor.yml` and modify the config as needed.
+
+```
+/install.sh --with-trivy --with-chartmuseum
+```
