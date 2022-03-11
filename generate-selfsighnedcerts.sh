@@ -19,9 +19,13 @@ if [ ! -f "${cakeyfile}" ] || [ ! -f "${cacrtfile}" ]; then
 	openssl req -x509 -new -nodes -sha512 -days 3650 -subj "/C=US/ST=VA/L=Ashburn/O=SE/OU=Personal/CN=$(hostname)" -key ${cakeyfile} -out ${cacrtfile}
 
 	sudo cp -p ${cacrtfile} /usr/local/share/ca-certificates/${cacrtfile}
+	echo 
 	echo
-	echo "CA file ${cacrtfile} copied to /usr/local/share/ca-certificates/${cacrtfile}."
-	echo "Execute sudo update-ca-certificates after this script has completed execution"
+	echo "For photon copy the ${cacrtfile} cert to /etc/ssl/certs/"
+	echo "           Execute rehash_ca_certificates.sh to update the CA bundle"
+	echo
+	echo "For Ubuntu CA file ${cacrtfile} copied to /usr/local/share/ca-certificates/${cacrtfile}."
+	echo "           Execute sudo update-ca-certificates after this script has completed execution"
 	echo
 	echo
 fi
