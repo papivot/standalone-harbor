@@ -58,7 +58,7 @@ metric:
   path: /metrics
 ```
 
-## Install with Clair/Notery and ChartMuseum 
+## Install with Trivy and Notery
 ```console
 sudo ./install.sh --with-trivy --with-notary
 ```
