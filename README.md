@@ -31,22 +31,22 @@ sudo systemctl enable docker
 sudo systemctl restart docker
 ```
 
-## Install Latest Stable Harbor Release v 2.2.1 in this example
+## Install Latest Stable Harbor Release v2.5.0 in this example
 ```console
-wget https://github.com/goharbor/harbor/releases/download/v2.4.1/harbor-offline-installer-v2.4.1.tgz
-tar xzvf harbor-offline-installer-v2.4.1.tgz
+wget https://github.com/goharbor/harbor/releases/download/v2.5.0/harbor-offline-installer-v2.5.0.tgz
+tar xzvf harbor-offline-installer-v2.5.0.tgz
 cd harbor
 cp harbor.yml.tmpl harbor.yml
 cp [your cert file] ./cert.pem 
-cp [your key file] ./key/pem
+cp [your key file] ./key.pem
 ```
 
 ## Modify the `harbor.yml` file. - Sample changes - 
 ```yaml
 ---
 hostname: harbor.navneetv.com
-#http:
-  #port: 80
+http:
+  port: 80
 https:
   port: 443
   certificate: /home/navneetv/workspace/harbor/harbor/cert.pem
@@ -60,9 +60,9 @@ metric:
 
 ## Install with Clair/Notery and ChartMuseum 
 ```console
-sudo ./install.sh --with-trivy --with-chartmuseum --with-notary
+sudo ./install.sh --with-trivy --with-notary
 ```
-## Hacks for air-gapped environment 
+## (OPTIONAL) Hacks for air-gapped environment 
 
 On a server with internet connections, download the trivy DB file and all the docker images that need to be dwonloaded
 ```console
