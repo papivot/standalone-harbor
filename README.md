@@ -101,7 +101,7 @@ sudo chmod 644 /data/trivy-adapter/trivy/db/metadata.json
 cd ${directory containing the docker-compose.yml}
 sudo docker-compose stop
 sudo docker-compose start
-# to complete destroy 
+# to completly destroy 
 sudo docker-compose down -v  --remove-orphans
 ```
 
